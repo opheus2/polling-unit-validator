@@ -10,15 +10,13 @@ class LocalGovernment extends Model
 {
     use HasFactory, UsesCode;
 
-    protected $table = "local_governments";
-
-    // protected $fillable = [
-    //     'name',
-    //     'abbreviation'
-    // ];
-
     /** Table should not be inserted into */
     protected $guarded = ['*'];
+    protected $hidden = [
+        'laravel_through_key'
+    ];
+
+    protected $table = "local_governments";
 
     public function state()
     {
@@ -27,5 +25,10 @@ class LocalGovernment extends Model
     public function registration_areas()
     {
         return $this->hasMany(RegistrationArea::class);
+    }
+
+    public function polling_units()
+    {
+        return $this->hasManyThrough(PollingUnit::class, RegistrationArea::class);
     }
 }

@@ -12,12 +12,9 @@ class PollingUnit extends Model
 {
     use HasFactory, UsesCode;
 
-    // protected $fillable = [
-    //     'registration_area_id',
-    //     'name',
-    //     'delimitation',
-    //     'abbreviation',
-    // ];
+    protected $hidden = [
+        'laravel_through_key'
+    ];
 
      protected $table = "polling_units";
 
