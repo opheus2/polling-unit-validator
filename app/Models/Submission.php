@@ -20,4 +20,14 @@ class Submission extends Model
     {
         return $this->belongsTo(PollingUnit::class);
     }
+    
+    public function party()
+    {
+        return $this->belongsTo(Party::class);
+    }
+
+    public function image()
+    {
+        return $this->belongsTo(Image::class);
+    }
 }

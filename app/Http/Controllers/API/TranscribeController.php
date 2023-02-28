@@ -48,24 +48,26 @@ class TranscribeController extends Controller
         try {
             $image = Image::query()->findOrFail($request->image_id);
 
-            foreach ($request->parties as $party) {
-                Submission::query()->create([
-                    'image_id' => $image->id,
-                    'party_id' => $party['id'],
-                    'score' => $party['score'],
-                    'polling_unit_id' => $request->polling_unit_id,
-                ]);
-            }
+            if (is_null($image->validated_at)) {
+                foreach ($request->parties as $party) {
+                    $image->submissions()->create([
+                        'party_id' => $party['id'],
+                        'score' => $party['score'],
+                        'polling_unit_id' => $request->polling_unit_id,
+                    ]);
+                }
 
-            $image->increment('count');
-            DB::commit();
+                $image->increment('count');
+
+                DB::commit();
+            }
         } catch (\Throwable $th) {
             Log::error($th->getMessage());
             DB::rollBack();
 
             return response()->json([
                 'message' => 'Transcription failed! Please try again.',
-            ], 500);
+            ], 400);
         }
 
         return response()->json([

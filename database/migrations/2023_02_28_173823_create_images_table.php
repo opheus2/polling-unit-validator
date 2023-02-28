@@ -13,8 +13,9 @@ return new class extends Migration
     {
         Schema::create('images', function (Blueprint $table) {
             $table->id();
-            $table->string('path');
+            $table->string('path')->index();
             $table->integer('count')->default(0);
+            $table->timestamp('validated_at')->nullable()->index();
             $table->timestamps();
         });
     }
