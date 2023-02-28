@@ -8,12 +8,18 @@ use Illuminate\Database\Eloquent\Model;
 class Image extends Model
 {
     use HasFactory;
-    protected $primaryKey = 'id';
+
+    protected $appends = ['url'];
+
     protected $fillable = [
         'path',
         'count',
     ];
-    protected $appends = ['url'];
+
+    protected $hidden = [
+        'created_at',
+        'updated_at'
+    ];
 
     public function submissions()
     {

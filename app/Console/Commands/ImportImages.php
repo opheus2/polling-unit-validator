@@ -8,7 +8,7 @@ use RecursiveIteratorIterator;
 use Illuminate\Console\Command;
 use RecursiveDirectoryIterator;
 
-class UpdatImagesDb extends Command
+class ImportImages extends Command
 {
     /**
      * The name and signature of the console command.
