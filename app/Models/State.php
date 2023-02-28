@@ -11,6 +11,8 @@ class State extends Model
 {
     use HasFactory, UsesCode;
 
+    protected $table = "states";
+
     // protected $fillable = [
     //     'name',
     //     'abbreviation',

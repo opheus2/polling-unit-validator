@@ -26,5 +26,6 @@ Route::prefix('v1')->group(function () {
     Route::get('random', [RandomController::class, 'index'])->name('random');
     Route::post('transcribe', [TranscribeController::class, 'index'])->name('transcribe');
     Route::get('results', [ResultController::class, 'index'])->name('results');
+    Route::get('process', [ResultController::class, 'process'])->name('process');
     Route::post('validate', [ValidateController::class, 'index'])->name('validate');
 });

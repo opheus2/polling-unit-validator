@@ -10,6 +10,8 @@ class LocalGovernment extends Model
 {
     use HasFactory, UsesCode;
 
+    protected $table = "local_governments";
+
     // protected $fillable = [
     //     'name',
     //     'abbreviation'

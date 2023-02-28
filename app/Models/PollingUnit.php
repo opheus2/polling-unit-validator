@@ -19,6 +19,8 @@ class PollingUnit extends Model
     //     'abbreviation',
     // ];
 
+     protected $table = "polling_units";
+
     /** Table should not be inserted into */
     protected $guarded = ['*'];
 
