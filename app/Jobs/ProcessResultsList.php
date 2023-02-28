@@ -24,7 +24,6 @@ class ProcessResultsList implements ShouldQueue
      */
     public function __construct()
     {
-        //
     }
 
     /**
@@ -32,14 +31,11 @@ class ProcessResultsList implements ShouldQueue
      */
     public function handle(): void
     {
+        Cache::delete('results');
+
         $states = State::all();
         $lgas = LocalGovernment::all();
-        $rgas = RegistrationArea::all();
-        // $polling_units = PollingUnit::all();
-
-        // for each state get the lga and the registration areas and subsequently their polling units.
         $results = [];
-        // dd($states);
         foreach($states as $state) {
             $results[$state->id] = [
                 'name' => $state->name, 
@@ -59,7 +55,6 @@ class ProcessResultsList implements ShouldQueue
 
             // for this polling unit get the results.
             $updatedPolls = $pollingUnites->flatten();
-            // dd($updatedPolls);
             foreach($updatedPolls as $poll){
                 // get their results.
                $results[$lga['state_id']]['lgas'][$lga->id]['results'] = Result::where('polling_unit_id', $poll->id)->get()->all();

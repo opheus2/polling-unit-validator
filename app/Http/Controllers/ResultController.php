@@ -12,14 +12,7 @@ class ResultController extends Controller
     // return results.
     public function index(Request $request)
     {
-        $state = $request->state;
-
         return Cache::get('results');
-        
-        // if($state == null){
-        //     $results = Result::all();
-        // }
-
     }
 
     public function process(Request $request){
