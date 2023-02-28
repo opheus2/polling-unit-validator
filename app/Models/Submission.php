@@ -10,7 +10,7 @@ class Submission extends Model
     use HasFactory;
 
     protected $fillable = [
-        'file',
+        'image_id',
         'score',
         'party_id',
         'polling_unit_id',
