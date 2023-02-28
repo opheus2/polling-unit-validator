@@ -26,6 +26,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::prefix('v1')->group(function () {
     Route::get('random', [RandomController::class, 'index'])->name('random');
     Route::get('results', [ResultController::class, 'index'])->name('results');
+    Route::get('process', [ResultController::class, 'process'])->name('process');
     Route::post('validate', [ValidateController::class, 'index'])->name('validate');
 
     // Transcribe/Submission routes

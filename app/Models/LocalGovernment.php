@@ -16,6 +16,8 @@ class LocalGovernment extends Model
         'laravel_through_key'
     ];
 
+    protected $table = "local_governments";
+
     public function state()
     {
         return $this->belongsTo(State::class);
