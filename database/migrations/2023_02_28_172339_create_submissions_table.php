@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('submissions', function (Blueprint $table) {
             $table->id();
-            $table->string('file');
+            $table->string('image_id');
             $table->integer('party_id');
             $table->integer('polling_unit_id');
             $table->bigInteger('score');

@@ -8,11 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class Image extends Model
 {
     use HasFactory;
-
+    protected $primaryKey = 'id';
     protected $fillable = [
         'path',
         'count',
     ];
+    protected $appends = ['url'];
 
     public function submissions()
     {
@@ -22,5 +23,10 @@ class Image extends Model
     public function getSubmissionCountAttributes()
     {
         return $this->submissions()->count();
+    }
+
+    public function getUrlAttribute()
+    {
+        return url($this->path);
     }
 }
