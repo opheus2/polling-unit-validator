@@ -17,6 +17,8 @@ class PollingUnit extends Model
         'laravel_through_key'
     ];
 
+     protected $table = "polling_units";
+
     /** Table should not be inserted into */
     protected $guarded = ['*'];
 
