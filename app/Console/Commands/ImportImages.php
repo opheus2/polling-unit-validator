@@ -38,7 +38,11 @@ class ImportImages extends Command
 
             $filesInDir->each(function (SplFileInfo $file) use (&$count) {
                 if ($file->isFile() && in_array($file->getExtension(), ['jpg', 'jpeg', 'png', 'gif'])) {
-                    $paths = explode('public\\',$file->getRealPath());
+                    $paths = explode('public\\', $file->getRealPath());
+                    if (count($paths) < 2) {
+                        $paths = explode('public/', $file->getRealPath());
+                    }
+
                     Image::query()->updateOrCreate([
                         'path' => $paths[1],
                     ]);
@@ -50,7 +54,7 @@ class ImportImages extends Command
                     }
                 }
             });
-        
+
             $this->info("{$count} total images processed");
             $this->info('Images database updated successfully');
         } catch (\Exception $e) {
