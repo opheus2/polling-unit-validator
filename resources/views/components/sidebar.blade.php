@@ -1,46 +1,15 @@
-<!-- Off-canvas menu for mobile, show/hide based on off-canvas menu state. -->
 <div x-show="open" class="relative z-40 lg:hidden" role="dialog" aria-modal="true" x-ref="dialog">
-    <!--
-        Off-canvas menu backdrop, show/hide based on off-canvas menu state.
-  
-        Entering: "transition-opacity ease-linear duration-300"
-          From: "opacity-0"
-          To: "opacity-100"
-        Leaving: "transition-opacity ease-linear duration-300"
-          From: "opacity-100"
-          To: "opacity-0"
-      -->
     <div x-show="open" x-transition:enter="transition-opacity ease-linear duration-300"
         x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
         x-transition:leave="transition-opacity ease-linear duration-300" x-transition:leave-start="opacity-100"
         x-transition:leave-end="opacity-0" class="fixed inset-0 bg-gray-600 bg-opacity-75"></div>
 
     <div class="fixed inset-0 z-40 flex">
-        <!--
-          Off-canvas menu, show/hide based on off-canvas menu state.
-  
-          Entering: "transition ease-in-out duration-300 transform"
-            From: "-translate-x-full"
-            To: "translate-x-0"
-          Leaving: "transition ease-in-out duration-300 transform"
-            From: "translate-x-0"
-            To: "-translate-x-full"
-        -->
         <div x-show="open" x-transition:enter="transition ease-in-out duration-300 transform"
             x-transition:enter-start="-translate-x-full" x-transition:enter-end="translate-x-0"
             x-transition:leave="transition ease-in-out duration-300 transform" x-transition:leave-start="translate-x-0"
             x-transition:leave-end="-translate-x-full" class="relative flex w-full max-w-xs flex-1 flex-col bg-white"
             @click.away="open = false">
-            <!--
-            Close button, show/hide based on off-canvas menu state.
-  
-            Entering: "ease-in-out duration-300"
-              From: "opacity-0"
-              To: "opacity-100"
-            Leaving: "ease-in-out duration-300"
-              From: "opacity-100"
-              To: "opacity-0"
-          -->
             <div x-show="open" x-transition:enter="ease-in-out duration-300" x-transition:enter-start="opacity-0"
                 x-transition:enter-end="opacity-100" x-transition:leave="ease-in-out duration-300"
                 x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0"
@@ -62,8 +31,8 @@
                 </div>
                 <nav class="mt-5 space-y-1 px-2">
                     <!-- Current: "bg-gray-100 text-gray-900", Default: "text-gray-600 hover:bg-gray-50 hover:text-gray-900" -->
-                    <a href="#"
-                        class="bg-gray-100 text-gray-900 group flex items-center rounded-md px-2 py-2 text-base font-medium">
+                    <a href="{{ route('admin.dashboard') }}"
+                        class="{{ request()->route()->getName() === 'admin.dashboard'? 'bg-gray-100 text-gray-900': 'text-gray-600 hover:bg-gray-50 hover:text-gray-900' }} group flex items-center rounded-md px-2 py-2 text-base font-medium">
                         <!-- Current: "text-gray-500", Default: "text-gray-400 group-hover:text-gray-500" -->
                         <svg class="text-gray-500 mr-4 h-6 w-6 flex-shrink-0" fill="none" viewBox="0 0 24 24"
                             stroke-width="1.5" stroke="currentColor" aria-hidden="true">
@@ -73,17 +42,17 @@
                         Dashboard
                     </a>
 
-                    <a href="#"
-                        class="text-gray-600 hover:bg-gray-50 hover:text-gray-900 group flex items-center rounded-md px-2 py-2 text-base font-medium">
+                    <a href="{{ route('submissions.index') }}"
+                        class="{{ request()->route()->getName() === 'submissions.index'? 'bg-gray-100 text-gray-900': 'text-gray-600 hover:bg-gray-50 hover:text-gray-900' }} group flex items-center rounded-md px-2 py-2 text-base font-medium">
                         <svg class="text-gray-400 group-hover:text-gray-500 mr-4 h-6 w-6 flex-shrink-0" fill="none"
                             viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round"
                                 d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z" />
                         </svg>
-                        Team
+                        Submissions
                     </a>
 
-                    <a href="#"
+                    {{-- <a href="#"
                         class="text-gray-600 hover:bg-gray-50 hover:text-gray-900 group flex items-center rounded-md px-2 py-2 text-base font-medium">
                         <svg class="text-gray-400 group-hover:text-gray-500 mr-4 h-6 w-6 flex-shrink-0" fill="none"
                             viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
@@ -121,7 +90,7 @@
                                 d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z" />
                         </svg>
                         Reports
-                    </a>
+                    </a> --}}
                 </nav>
             </div>
             <div class="flex flex-shrink-0 border-t border-gray-200 p-4">
@@ -133,7 +102,8 @@
                                 alt="">
                         </div>
                         <div class="ml-3">
-                            <p class="text-base font-medium text-gray-700 group-hover:text-gray-900">{{ auth()->user()->name }}</p>
+                            <p class="text-base font-medium text-gray-700 group-hover:text-gray-900">
+                                {{ auth()->user()->name }}</p>
                             <p class="text-sm font-medium text-gray-500 group-hover:text-gray-700">Logout</p>
                         </div>
                     </div>
@@ -158,8 +128,8 @@
             </div>
             <nav class="mt-5 flex-1 space-y-1 bg-white px-2">
                 <!-- Current: "bg-gray-100 text-gray-900", Default: "text-gray-600 hover:bg-gray-50 hover:text-gray-900" -->
-                <a href="#"
-                    class="bg-gray-100 text-gray-900 group flex items-center rounded-md px-2 py-2 text-sm font-medium">
+                <a href="{{ route('admin.dashboard') }}"
+                    class="{{ request()->route()->getName() === 'admin.dashboard'? 'bg-gray-100 text-gray-900': 'text-gray-600 hover:bg-gray-50 hover:text-gray-900' }} group flex items-center rounded-md px-2 py-2 text-sm font-medium">
                     <!-- Current: "text-gray-500", Default: "text-gray-400 group-hover:text-gray-500" -->
                     <svg class="text-gray-500 mr-3 h-6 w-6 flex-shrink-0" fill="none" viewBox="0 0 24 24"
                         stroke-width="1.5" stroke="currentColor" aria-hidden="true">
@@ -169,17 +139,17 @@
                     Dashboard
                 </a>
 
-                <a href="#"
-                    class="text-gray-600 hover:bg-gray-50 hover:text-gray-900 group flex items-center rounded-md px-2 py-2 text-sm font-medium">
+                <a href="{{ route('submissions.index') }}"
+                    class="{{ request()->route()->getName() === 'submissions.index'? 'bg-gray-100 text-gray-900': 'text-gray-600 hover:bg-gray-50 hover:text-gray-900' }} group flex items-center rounded-md px-2 py-2 text-sm font-medium">
                     <svg class="text-gray-400 group-hover:text-gray-500 mr-3 h-6 w-6 flex-shrink-0" fill="none"
                         viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
                         <path stroke-linecap="round" stroke-linejoin="round"
                             d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z" />
                     </svg>
-                    Team
+                    Submissions
                 </a>
 
-                <a href="#"
+                {{-- <a href="#"
                     class="text-gray-600 hover:bg-gray-50 hover:text-gray-900 group flex items-center rounded-md px-2 py-2 text-sm font-medium">
                     <svg class="text-gray-400 group-hover:text-gray-500 mr-3 h-6 w-6 flex-shrink-0" fill="none"
                         viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
@@ -217,7 +187,7 @@
                             d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z" />
                     </svg>
                     Reports
-                </a>
+                </a> --}}
             </nav>
         </div>
         <div class="flex flex-shrink-0 border-t border-gray-200 p-4">
@@ -228,10 +198,12 @@
                             src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
                             alt="">
                     </div>
-                    <div class="ml-3">
-                        <p class="text-sm font-medium text-gray-700 group-hover:text-gray-900">{{ auth()->user()->name }}</p>
-                        <p class="text-xs font-medium text-gray-500 group-hover:text-gray-700">Logout</p>
-                    </div>
+                    <form class="ml-3" method="POST" action="{{route('logout')}}">
+                        @csrf
+                        <p class="text-sm font-medium text-gray-700 group-hover:text-gray-900">
+                            {{ auth()->user()->name }}</p>
+                        <button type="submit" class="text-xs font-medium text-gray-500 group-hover:text-gray-700 outline-none">Logout</p>
+                    </form>
                 </div>
             </a>
         </div>

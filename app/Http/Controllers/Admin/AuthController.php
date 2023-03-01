@@ -25,6 +25,6 @@ class AuthController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect()->route('admin.auth.login');
+        return redirect()->route('login.view');
     }
 }

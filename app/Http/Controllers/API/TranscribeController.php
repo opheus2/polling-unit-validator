@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Models\Image;
 use App\Models\Party;
+use App\Models\State;
+use Illuminate\Support\Str;
+use App\Models\LocalGovernment;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreTranscribeRequest;
-use App\Models\Image;
-use App\Models\LocalGovernment;
-use App\Models\State;
-use Illuminate\Support\Facades\Log;
 
 class TranscribeController extends Controller
 {
@@ -64,6 +65,7 @@ class TranscribeController extends Controller
             $image = Image::query()->findOrFail($request->image_id);
 
             if (is_null($image->validated_at)) {
+                $session_id = Str::orderedUuid()->toString();
                 foreach ($request->parties as $party) {
                     $image->submissions()->create([
                         'party_id' => $party['id'],
@@ -72,6 +74,7 @@ class TranscribeController extends Controller
                         'polling_unit_id' => $request->polling_unit_id,
                         'has_corrections' => $request->has_corrections,
                         'is_unclear' => $request->is_unclear,
+                        'session_id' => $session_id, // we need this to group submissions
                     ]);
                 }
 
