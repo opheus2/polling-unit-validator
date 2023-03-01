@@ -33,7 +33,8 @@
                                 <tbody class="divide-y divide-gray-200">
                                     @if ($submissions->isEmpty())
                                         <tr>
-                                            <td colspan="4" class="font-bold text-center py-4 px-3 text-sm text-gray-500">
+                                            <td colspan="4"
+                                                class="font-bold text-center py-4 px-3 text-sm text-gray-500">
                                                 No more pending submissions found.
                                             </td>
                                         </tr>
@@ -60,6 +61,11 @@
 
                                     @endif
                                 </tbody>
+                                @if (!$submissions->isEmpty())
+                                    <tfoot>
+                                        {!! $submissions->links() !!}
+                                    </tfoot>
+                                @endif
                             </table>
                         </div>
                     </div>
