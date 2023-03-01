@@ -20,14 +20,14 @@ class TranscribeController extends Controller
             ->where('count', 0)
             ->withCount('submissions')
             ->whereNull('validated_at')
-            ->inRandomOrder('count')
+            ->inRandomOrder()
             ->first();
 
         if (empty($image)) {
             $image = Image::query()
                 ->withCount('submissions')
                 ->whereNull('validated_at')
-                ->inRandomOrder('count')
+                ->inRandomOrder()
                 ->first();
         }
 
@@ -35,7 +35,7 @@ class TranscribeController extends Controller
             'data' => [
                 'image' => $image,
                 'states' => State::query()->get(),
-                'parties' => Party::query()->get(['id', 'name']),
+                'parties' => Party::query()->get(['id', 'name', 'icon']),
             ]
         ]);
     }
@@ -65,7 +65,10 @@ class TranscribeController extends Controller
             $image = Image::query()->findOrFail($request->image_id);
 
             if (is_null($image->validated_at)) {
-                $session_id = Str::orderedUuid()->toString();
+                $session_id = Str::isUuid($request->session_id)
+                    ? $request->session_id
+                    : Str::orderedUuid()->toString();
+
                 foreach ($request->parties as $party) {
                     $image->submissions()->create([
                         'party_id' => $party['id'],
@@ -94,6 +97,7 @@ class TranscribeController extends Controller
 
         return response()->json([
             'message' => 'Transcription successful! Thank you.',
+            'session_id' => $session_id,
         ], 200);
     }
 }
