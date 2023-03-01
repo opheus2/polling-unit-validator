@@ -16,8 +16,8 @@ class Party extends Model
 
     public function getIconAttribute($value)
     {
-        if(!is_null($value)) {
-            return url($value);
+        if (!is_null($value)) {
+            return url("/logos/" . $value);
         }
 
         return $value;

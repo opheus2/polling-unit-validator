@@ -21,6 +21,6 @@ class PartySeeder extends Seeder
 
         $data = collect(config('constants.parties'));
 
-        $data->each(fn ($name) => Party::create(['name' => $name]));
+        $data->each(fn ($name) => Party::create(['name' => $name, 'icon' => "{$name}.png"]));
     }
 }
