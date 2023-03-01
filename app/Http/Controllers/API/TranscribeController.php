@@ -16,8 +16,23 @@ class TranscribeController extends Controller
 {
     public function index()
     {
+        $image = Image::query()
+            ->where('count', 0)
+            ->withCount('submissions')
+            ->inRandomOrder('count')
+            ->first();
+
+        if (empty($image)) {
+            $image = Image::query()
+                ->withCount('submissions')
+                ->min('count', 1)
+                ->inRandomOrder('count')
+                ->first();
+        }
+
         return response()->json([
             'data' => [
+                'image' => $image,
                 'states' => State::query()->get(),
                 'parties' => Party::query()->get(['id', 'name']),
             ]

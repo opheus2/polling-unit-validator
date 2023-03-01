@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\ValidateController;
 use App\Http\Controllers\API\SubmissionController;
+use App\Http\Middleware\RedirectByAuth;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,10 +22,14 @@ Route::get('/', function () {
 });
 
 Route::prefix('elevated')->group(function () {
-    Route::get('login', [AuthController::class, 'loginForm'])->name('login.view');
-    Route::post('login', [AuthController::class, 'login'])->name('login.post');
+    Route::middleware([RedirectByAuth::class])->group(function () {
+        Route::get('login', [AuthController::class, 'loginForm'])->name('login.view');
+        Route::post('login', [AuthController::class, 'login'])->name('login.post');
+    });
+    Route::post('logout', [AuthController::class, 'logout'])->name('logout');
 
-    Route::group(['middleware' => 'auth'], function () {
+    Route::middleware(['auth'])->group(function () {
+        Route::view('dashboard', 'admin.dashboard')->name('admin.dashboard');
         Route::apiResource('submissions', SubmissionController::class)->only(['index', 'show', 'destroy']);
         Route::post('validate', [ValidateController::class, 'index'])->name('validate');
     });
