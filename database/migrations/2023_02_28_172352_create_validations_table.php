@@ -13,11 +13,12 @@ return new class extends Migration
     {
         Schema::create('validations', function (Blueprint $table) {
             $table->id();
-            $table->string('file');
+            $table->string('image_id');
             $table->integer('party_id');
             $table->integer('polling_unit_id');
             $table->bigInteger('score');
             $table->bigInteger('user_id');
+            $table->timestamp('validated_at')->nullable();
             $table->timestamps();
         });
     }

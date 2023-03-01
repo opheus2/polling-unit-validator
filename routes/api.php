@@ -23,7 +23,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::prefix('v1')->group(function () {
     Route::get('random', [RandomController::class, 'index'])->name('random');
-    Route::get('results', [ResultController::class, 'index'])->name('results');
+    Route::get('results/image/{image}', [ResultController::class, 'byImage'])->name('results.image');
+    Route::get('results/lga/{localGovernment}', [ResultController::class, 'byLocalGovernment'])->name('results.lga');
+    Route::get('results/states/{state}', [ResultController::class, 'byState'])->name('results.state');
 
     // Transcribe/Submission routes
     Route::apiResource('transcribe', TranscribeController::class)->only(['index', 'store']);

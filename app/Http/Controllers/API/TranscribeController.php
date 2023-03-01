@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\API;
 
 use App\Models\Party;
-use App\Models\Submission;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreTranscribeRequest;
@@ -19,13 +18,14 @@ class TranscribeController extends Controller
         $image = Image::query()
             ->where('count', 0)
             ->withCount('submissions')
+            ->whereNull('validated_at')
             ->inRandomOrder('count')
             ->first();
 
         if (empty($image)) {
             $image = Image::query()
                 ->withCount('submissions')
-                ->min('count', 1)
+                ->whereNull('validated_at')
                 ->inRandomOrder('count')
                 ->first();
         }
@@ -68,6 +68,7 @@ class TranscribeController extends Controller
                     $image->submissions()->create([
                         'party_id' => $party['id'],
                         'score' => $party['score'],
+                        'ip_address' => $request->ip(),
                         'polling_unit_id' => $request->polling_unit_id,
                     ]);
                 }
@@ -82,6 +83,7 @@ class TranscribeController extends Controller
 
             return response()->json([
                 'message' => 'Transcription failed! Please try again.',
+                'error' => $th->getMessage(),
             ], 400);
         }
 

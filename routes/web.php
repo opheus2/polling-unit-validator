@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AuthController;
+use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ValidateController;
 use App\Http\Controllers\API\SubmissionController;
 use App\Http\Middleware\RedirectByAuth;
@@ -29,7 +30,7 @@ Route::prefix('elevated')->group(function () {
     Route::post('logout', [AuthController::class, 'logout'])->name('logout');
 
     Route::middleware(['auth'])->group(function () {
-        Route::view('dashboard', 'admin.dashboard')->name('admin.dashboard');
+        Route::get('dashboard', DashboardController::class)->name('admin.dashboard');
         Route::apiResource('submissions', SubmissionController::class)->only(['index', 'show', 'destroy']);
         Route::post('validate', [ValidateController::class, 'index'])->name('validate');
     });
