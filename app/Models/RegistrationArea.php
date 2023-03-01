@@ -12,14 +12,6 @@ class RegistrationArea extends Model
 {
     use HasFactory, UsesCode;
 
-    // protected $fillable = [
-    //     'name',
-    //     'local_government_id',
-    //     'abbreviation',
-    // ];
-
-    protected $table  = "registration_areas";
-
     /** Table should not be inserted into */
     protected $guarded = ['*'];
 

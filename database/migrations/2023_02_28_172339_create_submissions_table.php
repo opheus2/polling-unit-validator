@@ -17,6 +17,9 @@ return new class extends Migration
             $table->integer('party_id');
             $table->integer('polling_unit_id');
             $table->bigInteger('score');
+            $table->string('ip_address')->nullable();
+            $table->boolean('has_corrections')->default(false);
+            $table->boolean('is_unclear')->default(false);
             $table->timestamps();
         });
     }

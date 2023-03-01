@@ -23,10 +23,12 @@ class StoreTranscribeRequest extends FormRequest
     {
         return [
             'image_id' => 'required|exists:App\Models\Image,id',
-            'parties' => 'array:id,score|required',
+            'parties' => 'array|required',
             'parties.*.id' => 'required|exists:App\Models\Party,id',
             'parties.*.score' => 'required|numeric',
             'polling_unit_id' => 'required|exists:App\Models\PollingUnit,id',
+            'has_corrections' => 'required|boolean',
+            'is_unclear' => 'required|boolean',
         ];
     }
 }

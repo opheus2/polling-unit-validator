@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Submission extends Model
 {
@@ -14,10 +16,33 @@ class Submission extends Model
         'score',
         'party_id',
         'polling_unit_id',
+        'has_corrections',
+        'is_unclear',
+        'ip_address',
     ];
 
-    public function polling_unit()
+    protected $hidden = [
+        'created_at',
+        'ip_address',
+    ];
+
+    public function polling_unit(): BelongsTo
     {
         return $this->belongsTo(PollingUnit::class);
+    }
+    
+    public function party(): BelongsTo
+    {
+        return $this->belongsTo(Party::class);
+    }
+
+    public function image(): BelongsTo
+    {
+        return $this->belongsTo(Image::class);
+    }
+
+    public function validation(): HasOne
+    {
+        return $this->hasOne(Validation::class);
     }
 }

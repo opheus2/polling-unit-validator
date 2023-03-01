@@ -2,10 +2,8 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ResultController;
-use App\Http\Controllers\ValidateController;
+use App\Http\Controllers\API\ResultController;
 use App\Http\Controllers\API\RandomController;
-use App\Http\Controllers\API\SubmissionController;
 use App\Http\Controllers\API\TranscribeController;
 
 /*
@@ -25,16 +23,12 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::prefix('v1')->group(function () {
     Route::get('random', [RandomController::class, 'index'])->name('random');
-    Route::get('results', [ResultController::class, 'index'])->name('results');
-    Route::get('process', [ResultController::class, 'process'])->name('process');
-    Route::post('validate', [ValidateController::class, 'index'])->name('validate');
+    Route::get('results/image/{image}', [ResultController::class, 'byImage'])->name('results.image');
+    Route::get('results/lga/{localGovernment}', [ResultController::class, 'byLocalGovernment'])->name('results.lga');
+    Route::get('results/states/{state}', [ResultController::class, 'byState'])->name('results.state');
 
     // Transcribe/Submission routes
     Route::apiResource('transcribe', TranscribeController::class)->only(['index', 'store']);
     Route::get('transcribe/state/{state}/lgas', [TranscribeController::class, 'lgas'])->name('transcribe.lga');
     Route::get('transcribe/lga/{local_government}/units', [TranscribeController::class, 'units'])->name('transcribe.units');
-
-    Route::group(['middleware' => 'auth:sanctum'], function () {
-        Route::apiResource('submissions', SubmissionController::class)->only(['index', 'show', 'destroy']);
-    });
 });

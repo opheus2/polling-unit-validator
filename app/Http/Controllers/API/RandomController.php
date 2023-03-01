@@ -16,6 +16,7 @@ class RandomController extends Controller
     {
         $image = Image::query()
             ->where('count', 0)
+            ->whereNull('validated_at')
             ->withCount('submissions')
             ->inRandomOrder('count')
             ->first();
@@ -23,7 +24,7 @@ class RandomController extends Controller
         if (empty($image)) {
             $image = Image::query()
                 ->withCount('submissions')
-                ->min('count', 1)
+                ->whereNull('validated_at')
                 ->inRandomOrder('count')
                 ->first();
         }

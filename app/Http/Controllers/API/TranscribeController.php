@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\API;
 
 use App\Models\Party;
-use App\Models\Submission;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreTranscribeRequest;
@@ -16,8 +15,24 @@ class TranscribeController extends Controller
 {
     public function index()
     {
+        $image = Image::query()
+            ->where('count', 0)
+            ->withCount('submissions')
+            ->whereNull('validated_at')
+            ->inRandomOrder('count')
+            ->first();
+
+        if (empty($image)) {
+            $image = Image::query()
+                ->withCount('submissions')
+                ->whereNull('validated_at')
+                ->inRandomOrder('count')
+                ->first();
+        }
+
         return response()->json([
             'data' => [
+                'image' => $image,
                 'states' => State::query()->get(),
                 'parties' => Party::query()->get(['id', 'name']),
             ]
@@ -48,24 +63,30 @@ class TranscribeController extends Controller
         try {
             $image = Image::query()->findOrFail($request->image_id);
 
-            foreach ($request->parties as $party) {
-                Submission::query()->create([
-                    'image_id' => $image->id,
-                    'party_id' => $party['id'],
-                    'score' => $party['score'],
-                    'polling_unit_id' => $request->polling_unit_id,
-                ]);
-            }
+            if (is_null($image->validated_at)) {
+                foreach ($request->parties as $party) {
+                    $image->submissions()->create([
+                        'party_id' => $party['id'],
+                        'score' => $party['score'],
+                        'ip_address' => $request->ip(),
+                        'polling_unit_id' => $request->polling_unit_id,
+                        'has_corrections' => $request->has_corrections,
+                        'is_unclear' => $request->is_unclear,
+                    ]);
+                }
 
-            $image->increment('count');
-            DB::commit();
+                $image->increment('count');
+
+                DB::commit();
+            }
         } catch (\Throwable $th) {
             Log::error($th->getMessage());
             DB::rollBack();
 
             return response()->json([
                 'message' => 'Transcription failed! Please try again.',
-            ], 500);
+                'error' => $th->getMessage(),
+            ], 400);
         }
 
         return response()->json([

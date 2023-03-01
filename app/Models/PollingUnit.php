@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
 class PollingUnit extends Model
 {
@@ -15,8 +16,6 @@ class PollingUnit extends Model
     protected $hidden = [
         'laravel_through_key'
     ];
-
-     protected $table = "polling_units";
 
     /** Table should not be inserted into */
     protected $guarded = ['*'];
