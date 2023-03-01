@@ -36,6 +36,11 @@ class TranscribeController extends Controller
                 'image' => $image,
                 'states' => State::query()->get(),
                 'parties' => Party::query()->get(['id', 'name', 'icon']),
+                'statistics' => [
+                    'total_images' => Image::query()->count(),
+                    'total_submissions' => (int) Image::query()->sum('count'),
+                    'total_validated' => Image::query()->whereNotNull('validated_at')->count(),
+                ],
             ]
         ]);
     }
