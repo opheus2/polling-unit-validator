@@ -27,6 +27,8 @@ class StoreTranscribeRequest extends FormRequest
             'parties.*.id' => 'required|exists:App\Models\Party,id',
             'parties.*.score' => 'required|numeric',
             'polling_unit_id' => 'required|exists:App\Models\PollingUnit,id',
+            'has_corrections' => 'required|boolean',
+            'is_unclear' => 'required|boolean',
         ];
     }
 }

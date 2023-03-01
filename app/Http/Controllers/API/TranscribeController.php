@@ -70,6 +70,8 @@ class TranscribeController extends Controller
                         'score' => $party['score'],
                         'ip_address' => $request->ip(),
                         'polling_unit_id' => $request->polling_unit_id,
+                        'has_corrections' => $request->has_corrections,
+                        'is_unclear' => $request->is_unclear,
                     ]);
                 }
 

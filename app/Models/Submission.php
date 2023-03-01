@@ -16,6 +16,8 @@ class Submission extends Model
         'score',
         'party_id',
         'polling_unit_id',
+        'has_corrections',
+        'is_unclear',
         'ip_address',
     ];
 
