@@ -19,6 +19,7 @@ class Submission extends Model
         'has_corrections',
         'is_unclear',
         'ip_address',
+        'session_id',
     ];
 
     protected $hidden = [

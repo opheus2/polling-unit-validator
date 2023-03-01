@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Image;
 use App\Models\LocalGovernment;
+use App\Models\Party;
 use App\Models\PollingUnit;
+use App\Models\RegistrationArea;
 use App\Models\State;
 use App\Models\Submission;
 use Illuminate\Http\Request;
@@ -22,6 +25,9 @@ class DashboardController extends Controller
                 'lgasCount' => LocalGovernment::count(),
                 'pollingUnitsCount' => PollingUnit::count(),
                 'submissionsCount' => Submission::count(),
+                'imagesCount' => Image::count(),
+                'registeredAreasCount' => RegistrationArea::count(),
+                'partiesCount' => Party::count(),
                 'validatedSubmissionsCount' => Submission::query()
                     ->whereHas('image', fn ($query) => $query->validated())
                     ->count(),

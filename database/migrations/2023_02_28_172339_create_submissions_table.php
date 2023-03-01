@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('ip_address')->nullable();
             $table->boolean('has_corrections')->default(false);
             $table->boolean('is_unclear')->default(false);
+            $table->string('session_id')->nullable();
             $table->timestamps();
         });
     }
