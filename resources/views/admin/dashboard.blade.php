@@ -26,6 +26,28 @@
                     </div>
                 </dl>
             </div>
+            <div class="mb-3">
+                <dl class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-3">
+                    <div class="overflow-hidden rounded-lg bg-white px-4 py-5 shadow sm:p-6">
+                        <dt class="truncate text-sm font-medium text-gray-500">States</dt>
+                        <dd class="mt-1 text-3xl font-semibold tracking-tight text-gray-900">
+                            {{ number_format($imagesCount) }}</dd>
+                    </div>
+
+                    <div class="overflow-hidden rounded-lg bg-white px-4 py-5 shadow sm:p-6">
+                        <dt class="truncate text-sm font-medium text-gray-500">LGAs</dt>
+                        <dd class="mt-1 text-3xl font-semibold tracking-tight text-gray-900">
+                            {{ number_format($registeredAreasCount) }}</dd>
+                    </div>
+
+                    <div class="overflow-hidden rounded-lg bg-white px-4 py-5 shadow sm:p-6">
+                        <dt class="truncate text-sm font-medium text-gray-500">Polling Units</dt>
+                        <dd class="mt-1 text-3xl font-semibold tracking-tight text-gray-900">
+                            {{ number_format($partiesCount) }}
+                        </dd>
+                    </div>
+                </dl>
+            </div>
             <hr class="my-6 border-1 rounded-full border-gray-200">
             <div>
                 <h3 class="text-base font-semibold leading-6 text-gray-900">Updated hourly</h3>
